@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { NavBar } from "./NavBar";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useRouter } from "next/router";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const location = useLocation();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       location.pathname !== "/login" &&
       location.pathname !== "/register"
     ) {
-      navigate("/login");
+      router.push("/login");
     }
   }, [isAuthenticated, navigate, location.pathname]);
 
