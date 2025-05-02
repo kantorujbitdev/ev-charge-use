@@ -1,22 +1,22 @@
 import React from "react";
 import { Battery, Zap } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
+import { Card, CardContent } from "components/ui/card";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { Progress } from "components/ui/progress";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
+} from "components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChargerConnector } from "@/lib/types";
-import { useCharging } from "@/contexts/ChargingContext";
+import { ChargerConnector } from "app/lib/types";
+import { useCharging } from "contexts/ChargingContext";
 import { toast } from "sonner";
 
 const chargingSchema = z.object({

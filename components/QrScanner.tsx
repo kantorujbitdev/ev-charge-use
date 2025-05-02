@@ -1,7 +1,8 @@
+"use client";
 import React, { useState } from "react";
 import { QrCode, Scan } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "components/ui/button";
+import { Card, CardContent } from "components/ui/card";
 import { toast } from "sonner";
 
 export const QrScanner = () => {

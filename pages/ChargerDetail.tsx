@@ -1,31 +1,47 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { MapPin, ArrowLeft, Info, Route } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { getChargerById } from "@/lib/mockData";
-import { ChargerStation } from "@/lib/types";
-import { useAuth } from "@/contexts/AuthContext";
-import { ConnectorCard } from "@/components/ConnectorCard";
+import { MapPin, ArrowLeft } from "lucide-react";
+import { Card, CardContent } from "components/ui/card";
+import { Button } from "components/ui/button";
+import { getChargerById } from "app/lib/mockData";
+import { ChargerStation } from "app/lib/types";
+import { useAuth } from "contexts/AuthContext";
+import { ConnectorCard } from "components/ConnectorCard";
 
 const ChargerDetail = () => {
-  const { id } = useParams<{ id: string }>();
+  const router = useRouter();
+  const { id } = router.query;
   const [charger, setCharger] = useState<ChargerStation | null>(null);
   const { isAuthenticated } = useAuth();
-  const router = useRouter();
 
-  const chargerId = parseInt(id || "0", 10);
+  // useEffect(() => {
+  //   if (typeof id === "string") {
+  //     const chargerId = parseInt(id, 10);
+  //     const foundCharger = getChargerById(chargerId);
+
+  //     if (foundCharger) {
+  //       setCharger(foundCharger);
+  //     } else {
+  //       router.push("/chargers");
+  //     }
+  //   }
+  // }, [id, router]);
 
   useEffect(() => {
-    if (chargerId) {
+    if (!router.isReady) return;
+
+    if (typeof id === "string") {
+      const chargerId = parseInt(id, 10);
       const foundCharger = getChargerById(chargerId);
+
       if (foundCharger) {
         setCharger(foundCharger);
       } else {
         router.push("/chargers");
       }
     }
-  }, [chargerId, navigate]);
+  }, [id, router.isReady]);
 
   if (!isAuthenticated) {
     router.push("/login");

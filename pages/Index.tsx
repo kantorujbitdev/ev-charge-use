@@ -1,23 +1,23 @@
+"use client";
 import { useRouter } from "next/router";
-
-import { useAuth } from "@/contexts/AuthContext";
-import { useCharging } from "@/contexts/ChargingContext";
-import { Button } from "@/components/ui/button";
+import { useAuth } from "contexts/AuthContext";
+import { useCharging } from "contexts/ChargingContext";
+import { Button } from "components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+} from "components/ui/card";
+import { Progress } from "components/ui/progress";
 import { MapPin, Zap, Clock } from "lucide-react";
-import { chargers } from "@/lib/mockData";
+import { chargers } from "app/lib/mockData";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card";
+} from "components/ui/hover-card";
 import NewsPage from "./NewsPage";
 
 const formatDuration = (milliseconds: number): string => {
@@ -147,7 +147,9 @@ const Index = () => {
             <Button
               variant="outline"
               className="w-full"
-              onClick={() => navigate(`/chargers/${currentSession.stationId}`)}
+              onClick={() =>
+                router.push(`/chargers/${currentSession.stationId}`)
+              }
             >
               View Details
             </Button>

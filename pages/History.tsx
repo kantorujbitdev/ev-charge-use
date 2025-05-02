@@ -1,12 +1,13 @@
+"use client";
 import React, { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { useAuth } from "contexts/AuthContext";
+import { Card, CardContent } from "components/ui/card";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { Button } from "components/ui/button";
 import { MapPin, Calendar, Zap, Clock, ChevronRight, Link } from "lucide-react";
-import { getUserSessions } from "@/lib/mockData";
-import { ChargingSession } from "@/lib/types";
+import { getUserSessions } from "app/lib/mockData";
+import { ChargingSession } from "app/lib/types";
 import { useRouter } from "next/router";
 
 const History = () => {

@@ -1,17 +1,18 @@
+"use client";
 import React from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
+import { useAuth } from "contexts/AuthContext";
+import { Button } from "components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
+} from "components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar";
+import { Separator } from "components/ui/separator";
 import { User, Mail, Phone, LogOut, Car, CreditCard } from "lucide-react";
-import { getUserSessions } from "@/lib/mockData";
+import { getUserSessions } from "app/lib/mockData";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,7 +23,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "components/ui/alert-dialog";
 import { useRouter } from "next/router";
 
 const Profile = () => {

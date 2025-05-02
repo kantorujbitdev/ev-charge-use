@@ -1,43 +1,50 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "components/ui/card";
+import { Button } from "components/ui/button";
 import {
   ArrowLeft,
   MapPin,
   Calendar,
   Clock,
   Zap,
-  Battery,
   CreditCard,
 } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { ChargingSession } from "@/lib/types";
-import { getSessionById } from "@/lib/mockData";
+import { useAuth } from "contexts/AuthContext";
+import { ChargingSession } from "app/lib/types";
+import { getSessionById } from "app/lib/mockData";
 
 const HistoryDetail = () => {
-  const { id } = useParams<{ id: string }>();
   const [session, setSession] = useState<ChargingSession | null>(null);
   const { isAuthenticated } = useAuth();
   const router = useRouter();
+  const { id } = router.query;
 
   useEffect(() => {
-    if (id) {
+    // Hanya jalankan saat id sudah tersedia dan valid
+    if (typeof id === "string") {
       const sessionId = parseInt(id, 10);
-      const foundSession = getSessionById(sessionId);
+      if (!isNaN(sessionId)) {
+        const foundSession = getSessionById(sessionId);
 
-      if (foundSession) {
-        setSession(foundSession);
-      } else {
-        router.push("/history");
+        if (foundSession) {
+          setSession(foundSession);
+        } else {
+          router.replace("/history");
+        }
       }
     }
-  }, [id, navigate]);
+  }, [id, router]);
 
-  if (!isAuthenticated) {
-    router.push("/login");
-    return null;
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.replace("/login");
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated || !id) {
+    return null; // atau bisa tampilkan loading spinner
   }
 
   if (!session) {
@@ -72,50 +79,17 @@ const HistoryDetail = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-3 bg-muted/50 rounded-lg">
-              <span className="text-sm text-muted-foreground flex items-center mb-1">
-                <Calendar className="h-4 w-4 mr-1" /> Date
-              </span>
-              <span className="font-medium">{session.date}</span>
-            </div>
-
-            <div className="p-3 bg-muted/50 rounded-lg">
-              <span className="text-sm text-muted-foreground flex items-center mb-1">
-                <Clock className="h-4 w-4 mr-1" /> Duration
-              </span>
-              <span className="font-medium">{session.duration}</span>
-            </div>
-
-            <div className="p-3 bg-muted/50 rounded-lg">
-              <span className="text-sm text-muted-foreground flex items-center mb-1">
-                <Zap className="h-4 w-4 mr-1" /> Energy
-              </span>
-              <span className="font-medium">{session.kWh} kWh</span>
-            </div>
-
-            <div className="p-3 bg-muted/50 rounded-lg">
-              <span className="text-sm text-muted-foreground flex items-center mb-1">
-                <CreditCard className="h-4 w-4 mr-1" /> Cost
-              </span>
-              <span className="font-medium">${cost}</span>
-            </div>
+            <InfoItem icon={Calendar} label="Date" value={session.date} />
+            <InfoItem icon={Clock} label="Duration" value={session.duration} />
+            <InfoItem icon={Zap} label="Energy" value={`${session.kWh} kWh`} />
+            <InfoItem icon={CreditCard} label="Cost" value={`$${cost}`} />
           </div>
 
           {session.startTime && session.endTime && (
             <div className="space-y-2">
               <div className="flex justify-between">
-                <div>
-                  <span className="text-sm text-muted-foreground">
-                    Start Time
-                  </span>
-                  <p className="font-medium">{session.startTime}</p>
-                </div>
-                <div className="text-right">
-                  <span className="text-sm text-muted-foreground">
-                    End Time
-                  </span>
-                  <p className="font-medium">{session.endTime}</p>
-                </div>
+                <TimeInfo label="Start Time" value={session.startTime} />
+                <TimeInfo label="End Time" value={session.endTime} />
               </div>
             </div>
           )}
@@ -123,18 +97,12 @@ const HistoryDetail = () => {
           <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
             <h3 className="font-medium mb-2">Charging Summary</h3>
             <div className="space-y-1">
-              <div className="flex justify-between text-sm">
-                <span>Energy consumed</span>
-                <span>{session.kWh} kWh</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span>Rate per kWh</span>
-                <span>$0.35</span>
-              </div>
-              <div className="flex justify-between text-sm font-medium pt-2 border-t">
-                <span>Total</span>
-                <span>${cost}</span>
-              </div>
+              <SummaryItem
+                label="Energy consumed"
+                value={`${session.kWh} kWh`}
+              />
+              <SummaryItem label="Rate per kWh" value="$0.35" />
+              <SummaryItem label="Total" value={`$${cost}`} isTotal />
             </div>
           </div>
         </CardContent>
@@ -142,5 +110,48 @@ const HistoryDetail = () => {
     </div>
   );
 };
+
+const InfoItem = ({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: any;
+  label: string;
+  value: string;
+}) => (
+  <div className="p-3 bg-muted/50 rounded-lg">
+    <span className="text-sm text-muted-foreground flex items-center mb-1">
+      <Icon className="h-4 w-4 mr-1" /> {label}
+    </span>
+    <span className="font-medium">{value}</span>
+  </div>
+);
+
+const TimeInfo = ({ label, value }: { label: string; value: string }) => (
+  <div>
+    <span className="text-sm text-muted-foreground">{label}</span>
+    <p className="font-medium">{value}</p>
+  </div>
+);
+
+const SummaryItem = ({
+  label,
+  value,
+  isTotal = false,
+}: {
+  label: string;
+  value: string;
+  isTotal?: boolean;
+}) => (
+  <div
+    className={`flex justify-between text-sm ${
+      isTotal ? "font-medium pt-2 border-t" : ""
+    }`}
+  >
+    <span>{label}</span>
+    <span>{value}</span>
+  </div>
+);
 
 export default HistoryDetail;

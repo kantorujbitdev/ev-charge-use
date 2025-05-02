@@ -1,10 +1,11 @@
+"use client";
 import React, { useState } from "react";
 import { MapPin, Zap, Battery, Info, Link } from "lucide-react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { chargers } from "@/lib/mockData";
-import { useAuth } from "@/contexts/AuthContext";
+import { Card, CardContent, CardFooter } from "components/ui/card";
+import { Input } from "components/ui/input";
+import { Button } from "components/ui/button";
+import { chargers } from "app/lib/mockData";
+import { useAuth } from "contexts/AuthContext";
 
 const Chargers = () => {
   const [searchTerm, setSearchTerm] = useState("");

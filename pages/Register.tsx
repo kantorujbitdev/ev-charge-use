@@ -1,9 +1,9 @@
-
+"use client";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useRouter } from "next/router";
+import { useAuth } from "contexts/AuthContext";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
 import {
   Card,
   CardContent,
@@ -11,9 +11,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Zap, ArrowLeft, Eye, EyeOff } from "lucide-react";
+} from "components/ui/card";
+import { Label } from "components/ui/label";
+import { Zap, ArrowLeft, Eye, EyeOff, Link } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,8 +23,9 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
+} from "components/ui/form";
 import { toast } from "sonner";
+const router = useRouter();
 
 const registerSchema = z
   .object({
@@ -33,7 +34,9 @@ const registerSchema = z
     confirmPassword: z.string(),
     name: z.string().min(2, "Name must be at least 2 characters"),
     vehicle: z.string().min(2, "Vehicle must be at least 2 characters"),
-    licensePlate: z.string().min(2, "License plate must be at least 2 characters"),
+    licensePlate: z
+      .string()
+      .min(2, "License plate must be at least 2 characters"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -45,7 +48,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { register } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -71,7 +74,7 @@ export default function Register() {
         values.licensePlate
       );
       if (success) {
-        navigate("/");
+        router.push("/");
       }
     } finally {
       setIsLoading(false);
@@ -161,7 +164,9 @@ export default function Register() {
                         <button
                           type="button"
                           className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
                           tabIndex={-1}
                         >
                           {showConfirmPassword ? (

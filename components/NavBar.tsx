@@ -1,13 +1,10 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Home, MapPin, Zap, User } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { cn } from "@/lib/utils";
+import { Home, MapPin, Zap, User, Link } from "lucide-react";
+import { useAuth } from "contexts/AuthContext";
+import { cn } from "app/lib/utils";
 
 export function NavBar() {
-  const location = useLocation();
   const { isAuthenticated } = useAuth();
-
   // Return empty fragment if not authenticated
   if (!isAuthenticated) return null;
 

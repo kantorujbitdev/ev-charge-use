@@ -1,12 +1,12 @@
+"use client";
 import React, { useEffect } from "react";
 import { NavBar } from "./NavBar";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "contexts/AuthContext";
 import { useRouter } from "next/router";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
-  const location = useLocation();
 
   useEffect(() => {
     // If user is not authenticated and not on login or register pages, redirect to login
@@ -17,7 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     ) {
       router.push("/login");
     }
-  }, [isAuthenticated, navigate, location.pathname]);
+  }, [isAuthenticated, router.pathname, location.pathname]);
 
   return (
     <div className="min-h-screen flex flex-col">
