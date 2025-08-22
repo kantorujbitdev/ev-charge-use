@@ -1,7 +1,7 @@
 import React from "react";
 import { Home, MapPin, Zap, User, Link } from "lucide-react";
 import { useAuth } from "contexts/AuthContext";
-import { cn } from "app/lib/utils";
+import { cn } from "@/lib/utils";
 
 export function NavBar() {
   const { isAuthenticated } = useAuth();

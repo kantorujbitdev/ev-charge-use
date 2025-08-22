@@ -1,6 +1,6 @@
 // src/components/NewsList.tsx
 import React from "react";
-import { Article } from "app/lib/news";
+import { Article } from "@/lib/news";
 
 interface NewsListProps {
   articles: Article[];

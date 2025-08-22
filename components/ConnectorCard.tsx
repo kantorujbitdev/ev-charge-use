@@ -15,7 +15,7 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChargerConnector } from "app/lib/types";
+import { ChargerConnector } from "@/lib/types";
 import { useCharging } from "contexts/ChargingContext";
 import { toast } from "sonner";
 

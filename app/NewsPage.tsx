@@ -1,7 +1,7 @@
 // pages/NewsPage.tsx
 "use client";
 import { useEffect, useState } from "react";
-import { fetchTopHeadlines, Article } from "app/lib/news"; // Pastikan `Article` didefinisikan di `news.ts`
+import { fetchTopHeadlines, Article } from "@/lib/news"; // Pastikan `Article` didefinisikan di `news.ts`
 import NewsList from "components/NewsList";
 
 export default function NewsPage() {

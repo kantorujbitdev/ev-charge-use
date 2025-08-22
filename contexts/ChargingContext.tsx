@@ -6,8 +6,8 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { ChargingContextType } from "app/lib/types";
-import { updateConnectorStatus } from "app/lib/mockData";
+import { ChargingContextType } from "@/lib/types";
+import { updateConnectorStatus } from "@/lib/mockData";
 import { toast } from "sonner";
 
 const ChargingContext = createContext<ChargingContextType>({

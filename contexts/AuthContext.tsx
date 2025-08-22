@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { User, AuthContextType } from "app/lib/types";
-import { findUserByUsername, registerNewUser } from "app/lib/mockData";
+import { User, AuthContextType } from "@/lib/types";
+import { findUserByUsername, registerNewUser } from "@/lib/mockData";
 import { toast } from "sonner";
 
 // Create the context with default values

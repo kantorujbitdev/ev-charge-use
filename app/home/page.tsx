@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAuth } from "contexts/AuthContext";
 import { useCharging } from "contexts/ChargingContext";
 import { Button } from "components/ui/button";
@@ -12,13 +12,13 @@ import {
 } from "components/ui/card";
 import { Progress } from "components/ui/progress";
 import { MapPin, Zap, Clock } from "lucide-react";
-import { chargers } from "app/lib/mockData";
+import { chargers } from "@/lib/mockData";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "components/ui/hover-card";
-import NewsPage from "./NewsPage";
+import NewsPage from "../NewsPage";
 
 const formatDuration = (milliseconds: number): string => {
   const seconds = Math.floor((milliseconds / 1000) % 60);

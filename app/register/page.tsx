@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAuth } from "contexts/AuthContext";
 import { Button } from "components/ui/button";
 import { Input } from "components/ui/input";
@@ -13,7 +13,9 @@ import {
   CardTitle,
 } from "components/ui/card";
 import { Label } from "components/ui/label";
-import { Zap, ArrowLeft, Eye, EyeOff, Link } from "lucide-react";
+import { Zap, ArrowLeft, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,8 +26,6 @@ import {
   FormItem,
   FormMessage,
 } from "components/ui/form";
-import { toast } from "sonner";
-const router = useRouter();
 
 const registerSchema = z
   .object({
@@ -242,7 +242,7 @@ export default function Register() {
               </Button>
               <div className="text-center text-sm">
                 Already have an account?{" "}
-                <Link to="/login" className="text-primary hover:underline">
+                <Link href="/login" className="text-primary hover:underline">
                   Sign In
                 </Link>
               </div>
@@ -253,3 +253,10 @@ export default function Register() {
     </div>
   );
 }
+
+// <Link
+//   href="/home"
+//   className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+// >
+//   Go to Home
+// </Link>
